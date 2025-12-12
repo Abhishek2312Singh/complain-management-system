@@ -15,6 +15,21 @@ public class ComplainService {
     @Autowired
     private ComplainRepo complainRepo;
 
+    public ComplainOutputDto convertToDto(Complain complain){
+        ComplainOutputDto complainOutputDto = new ComplainOutputDto();
+        complainOutputDto.setComplain(complain.getComplain());
+        complainOutputDto.setComplainDate(complain.getComplainDate());
+        complainOutputDto.setUsername(complain.getUsername());
+        complainOutputDto.setEmail(complain.getEmail());
+        complainOutputDto.setAddress(complain.getAddress());
+        complainOutputDto.setStatus(complain.getStatus());
+        complainOutputDto.setComplainResponse(complain.getComplainResponse());
+        complainOutputDto.setManagerEmail(complain.getManager().getEmail());
+        complainOutputDto.setManagerName(complain.getManager().getFullName());
+        complainOutputDto.setManagerMobile(complain.getManager().getMobile());
+        return complainOutputDto;
+    }
+
     public String addComplain(ComplainInputDto complainInputDto){
         Complain complain = new Complain();
         complain.setComplain(complainInputDto.getComplain());
@@ -43,14 +58,14 @@ public class ComplainService {
             return complainOutputDto;
         } else if (complain.getStatus() == ComplainStatus.IN_PROCESS) {
             complainOutputDto.setManagerEmail(complain.getManager().getEmail());
-            complainOutputDto.setManagerName(complain.getManager().getUsername());
+            complainOutputDto.setManagerName(complain.getManager().getFullName());
             complainOutputDto.setManagerMobile(complain.getManager().getMobile());
             return complainOutputDto;
         }
         else {
             complainOutputDto.setComplainResponse(complain.getComplainResponse());
             complainOutputDto.setManagerEmail(complain.getManager().getEmail());
-            complainOutputDto.setManagerName(complain.getManager().getUsername());
+            complainOutputDto.setManagerName(complain.getManager().getFullName());
             complainOutputDto.setManagerMobile(complain.getManager().getMobile());
             return complainOutputDto;
         }

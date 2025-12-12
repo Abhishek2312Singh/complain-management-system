@@ -2,6 +2,7 @@ package com.example.Product.Service.repository;
 
 import com.example.Product.Service.enums.ComplainStatus;
 import com.example.Product.Service.model.Complain;
+import com.example.Product.Service.model.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,6 @@ public interface ComplainRepo extends JpaRepository<Complain,Long> {
     Long countByComplainDate(LocalDate date);
     Optional<Complain> findByComplainNumber(String complainNumber);
     List<Complain> findAllByComplainStatus(ComplainStatus status);
+    List<Complain> findByManagerAndStatus(Manager manager, ComplainStatus status);
+    List<Complain> findByManagerOrStatus(Manager manager, ComplainStatus status);
 }

@@ -12,6 +12,7 @@ public class Manager {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String fullName;
     private String email;
     private Long mobile;
 
