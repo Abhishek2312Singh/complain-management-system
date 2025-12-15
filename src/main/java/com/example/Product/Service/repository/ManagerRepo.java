@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ManagerRepo extends JpaRepository<Manager,Long> {
     Optional<Manager> findByUsername(String username);
+
+    Long countByUsernameStartsWith(String username);
 }

@@ -1,6 +1,8 @@
 package com.example.Product.Service.service;
 
+import com.example.Product.Service.config.SecurityConfig;
 import com.example.Product.Service.dto.ComplainOutputDto;
+import com.example.Product.Service.dto.UserInputDto;
 import com.example.Product.Service.dto.UserOutputDto;
 import com.example.Product.Service.enums.ComplainStatus;
 import com.example.Product.Service.model.Complain;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 public class ManagerService {
+    @Autowired
+    private SecurityConfig config;
     @Autowired
     private ComplainRepo complainRepo;
     @Autowired
@@ -41,8 +45,33 @@ public class ManagerService {
         complain.setComplainResponse(response);
         complainRepo.save(complain);
     }
-    public UserOutputDto getAllManager(){
+    public List<UserOutputDto> getAllManager(){
         List<Manager> managers = managerRepo.findAll();
-        List<>
+        List<UserOutputDto> userOutputDtos = new ArrayList<>();
+        for(Manager manager : managers){
+            UserOutputDto userOutputDto = new UserOutputDto();
+            userOutputDto.setUsername(manager.getUsername());
+            userOutputDto.setFullName(manager.getFullName());
+            userOutputDto.setEmail(manager.getEmail());
+            userOutputDto.setMobile(manager.getMobile().toString());
+            userOutputDtos.add(userOutputDto);
+        }
+        return userOutputDtos;
+    }
+    public String addManager(UserInputDto userInputDto){
+        Manager manager = new Manager();
+        manager.setEmail(userInputDto.getEmail());
+        String[] fullName = userInputDto.getFullName().toLowerCase().split(" ");
+        String username = fullName[0].charAt(0) + String.valueOf(fullName[1].charAt(0));
+        username = (username  + userInputDto.getMobile().substring(6)
+                + (managerRepo.countByUsernameStartsWith(username.substring(0,1))+1)).toLowerCase();
+
+        manager.setUsername(username);
+        manager.setPassword(config.encoder().encode(username));
+        manager.setEmail(userInputDto.getEmail());
+        manager.setFullName(userInputDto.getFullName());
+        manager.setMobile(Long.parseLong(userInputDto.getMobile()));
+        managerRepo.save(manager);
+        return "New Manager Added!!";
     }
 }

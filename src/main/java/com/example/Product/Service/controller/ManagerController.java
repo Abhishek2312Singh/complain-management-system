@@ -1,20 +1,25 @@
 package com.example.Product.Service.controller;
 
+import com.example.Product.Service.dto.UserInputDto;
 import com.example.Product.Service.dto.UserOutputDto;
 import com.example.Product.Service.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/manager")
+@RestController
+@RequestMapping("/manager")
 public class ManagerController {
     @Autowired
     private ManagerService managerService;
     @GetMapping("/getall")
-    public ResponseEntity<List<UserOutputDto>> gettAllManager(){
-        return ResponseEntity.ok(managerService.find)
+    public ResponseEntity<List<UserOutputDto>> getAllManager(){
+        return ResponseEntity.ok(managerService.getAllManager());
+    }
+    @PostMapping("/addmanager")
+    public ResponseEntity<String> addManager(@RequestBody UserInputDto userInputDto){
+        return ResponseEntity.ok(managerService.addManager(userInputDto));
     }
 }
