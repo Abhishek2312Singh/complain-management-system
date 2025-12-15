@@ -1,9 +1,6 @@
 package com.example.Product.Service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jdk.jfr.DataAmount;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,8 +15,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique = true)
     private String username;
+
+    private String fullName;
+    private String email;
+    private String mobile;
     private String password;
 
     @Override

@@ -19,7 +19,9 @@ public class ComplainService {
         ComplainOutputDto complainOutputDto = new ComplainOutputDto();
         complainOutputDto.setComplain(complain.getComplain());
         complainOutputDto.setComplainDate(complain.getComplainDate());
+        complainOutputDto.setComplainNumber(complain.getComplainNumber());
         complainOutputDto.setUsername(complain.getUsername());
+        complainOutputDto.setMobile(complain.getMobile());
         complainOutputDto.setEmail(complain.getEmail());
         complainOutputDto.setAddress(complain.getAddress());
         complainOutputDto.setStatus(complain.getStatus());
@@ -40,7 +42,7 @@ public class ComplainService {
         complain.setStatus(ComplainStatus.PENDING);
         complain.setComplainDate(LocalDate.now());
         String complainNumber = LocalDate.now().toString().replace("-","")
-                + (1000 + complainRepo.countByComplainDate(LocalDate.now())) ;
+                + (1001 + complainRepo.countByComplainDate(LocalDate.now())) ;
         complain.setComplainNumber(complainNumber);
         complainRepo.save(complain);
         return complainNumber;
@@ -49,9 +51,11 @@ public class ComplainService {
         Complain complain = complainRepo.findByComplainNumber(complainNumber).orElseThrow(()->new RuntimeException("No Complain Found!!"));
         ComplainOutputDto complainOutputDto = new ComplainOutputDto();
         complainOutputDto.setComplain(complain.getComplain());
+        complainOutputDto.setMobile(complain.getMobile());
         complainOutputDto.setComplainDate(complain.getComplainDate());
         complainOutputDto.setUsername(complain.getUsername());
         complainOutputDto.setEmail(complain.getEmail());
+        complainOutputDto.setComplainNumber(complain.getComplainNumber());
         complainOutputDto.setAddress(complain.getAddress());
         complainOutputDto.setStatus(complain.getStatus());
         if(complain.getStatus() == ComplainStatus.PENDING){

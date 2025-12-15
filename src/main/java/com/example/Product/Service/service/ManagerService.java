@@ -1,8 +1,10 @@
 package com.example.Product.Service.service;
 
 import com.example.Product.Service.dto.ComplainOutputDto;
+import com.example.Product.Service.dto.UserOutputDto;
 import com.example.Product.Service.enums.ComplainStatus;
 import com.example.Product.Service.model.Complain;
+import com.example.Product.Service.model.Manager;
 import com.example.Product.Service.repository.ComplainRepo;
 import com.example.Product.Service.repository.ManagerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +40,9 @@ public class ManagerService {
         Complain complain = complainRepo.findByComplainNumber(complainNumber).orElseThrow(()->new RuntimeException("Complain Not Found!!"));
         complain.setComplainResponse(response);
         complainRepo.save(complain);
+    }
+    public UserOutputDto getAllManager(){
+        List<Manager> managers = managerRepo.findAll();
+        List<>
     }
 }

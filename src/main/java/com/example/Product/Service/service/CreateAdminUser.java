@@ -24,6 +24,9 @@ public class CreateAdminUser {
           if(userRepo.findByUsername("admin").isEmpty()){
               User user = new User();
               user.setUsername("admin");
+              user.setFullName("Abhishek Singh");
+              user.setEmail("abhishekrbs.singh@gmail.com");
+              user.setMobile("7701933308");
               user.setPassword(config.encoder().encode("admin"));
               userRepo.save(user);
               System.out.println("Admin Created!!");

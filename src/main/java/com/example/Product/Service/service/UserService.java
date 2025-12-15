@@ -1,20 +1,30 @@
 package com.example.Product.Service.service;
 
+import com.example.Product.Service.config.SecurityConfig;
 import com.example.Product.Service.dto.ComplainOutputDto;
+import com.example.Product.Service.dto.UserInputDto;
+import com.example.Product.Service.dto.UserOutputDto;
 import com.example.Product.Service.enums.ComplainStatus;
 import com.example.Product.Service.model.Complain;
 import com.example.Product.Service.model.Manager;
+import com.example.Product.Service.model.User;
 import com.example.Product.Service.repository.ComplainRepo;
 import com.example.Product.Service.repository.ManagerRepo;
+import com.example.Product.Service.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService{
+    @Autowired
+    private SecurityConfig config;
+    @Autowired
+    private UserRepo userRepo;
     @Autowired
     private ComplainRepo complainRepo;
     @Autowired
@@ -64,5 +74,36 @@ public class UserService{
         complain.setStatus(ComplainStatus.CLOSED);
         complainRepo.save(complain);
     }
-
+    public UserOutputDto getUser(Principal principal){
+        User user = userRepo.findByUsername(principal.getName()).orElseThrow(()-> new UsernameNotFoundException("User not found!!"));
+        UserOutputDto userOutputDto = new UserOutputDto();
+        userOutputDto.setFullName(user.getFullName());
+        userOutputDto.setMobile(user.getMobile());
+        userOutputDto.setEmail(user.getEmail());
+        userOutputDto.setUsername(user.getUsername());
+        return userOutputDto;
+    }
+    public String updateUser(UserInputDto userInputDto,Principal principal){
+        User user = userRepo.findByUsername(principal.getName()).orElseThrow(()->new UsernameNotFoundException("User not found!!"));
+        user.setMobile(userInputDto.getMobile());
+        user.setEmail(userInputDto.getEmail());
+        userRepo.save(user);
+        return "Profile Updated!!";
+    }
+    public String updatePassword(String currentPassword,String newPassword,String confirmPassword,Principal principal){
+        User user = userRepo.findByUsername(principal.getName()).orElseThrow(()->new UsernameNotFoundException("User not found!!"));
+        if(config.encoder().matches(currentPassword,user.getPassword())){
+            if(newPassword.equals(confirmPassword)){
+                user.setPassword(config.encoder().encode(newPassword));
+                userRepo.save(user);
+                return "Password Updated!!";
+            }
+            else {
+                throw new RuntimeException("New Password and Current Password Not Matched!!");
+            }
+        }
+        else {
+            throw new RuntimeException("Wrong Password!!");
+        }
+    }
 }

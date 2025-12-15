@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/complain")
+@CrossOrigin("http://localhost:5173")
 public class ComplainController {
     @Autowired
     private ComplainService complainService;
