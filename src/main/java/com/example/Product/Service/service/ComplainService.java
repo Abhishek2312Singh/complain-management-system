@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ComplainService {
@@ -73,5 +75,13 @@ public class ComplainService {
             complainOutputDto.setManagerMobile(complain.getManager().getMobile());
             return complainOutputDto;
         }
+    }
+    public List<ComplainOutputDto> getComplainByComplainNumberAndStatus(String status, String complainNumber){
+        List<Complain> complainList = complainRepo.findByStatusAndComplainNumberLike(ComplainStatus.valueOf(status.toUpperCase()),complainNumber);
+        List<ComplainOutputDto> complainOutputDtos = new ArrayList<>();
+        for(Complain complain : complainList){
+            complainOutputDtos.add(convertToDto(complain));
+        }
+        return complainOutputDtos;
     }
 }

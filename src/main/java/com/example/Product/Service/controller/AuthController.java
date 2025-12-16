@@ -1,16 +1,21 @@
 package com.example.Product.Service.controller;
 
 import com.example.Product.Service.dto.AuthInputDto;
+import com.example.Product.Service.dto.ComplainOutputDto;
 import com.example.Product.Service.dto.UserInputDto;
+import com.example.Product.Service.enums.ComplainStatus;
 import com.example.Product.Service.service.UserService;
 import com.example.Product.Service.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityReturnValueHandler;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 public class AuthController {
@@ -52,5 +57,18 @@ public class AuthController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @GetMapping("/getallcomplain")
+    public ResponseEntity<List<String>> getAllComplainByStatus(@RequestParam String status){
+        return ResponseEntity.ok(userService.getAllComplainByStatus(status));
+    }
+    @GetMapping("/getallmanager")
+    public ResponseEntity<List<String>> getAllManagers(){
+        return ResponseEntity.ok(userService.getAllManager());
+    }
+    @PutMapping("/assignmanager")
+    public ResponseEntity<Void> assignManager(@RequestParam String complainNumber, @RequestParam String managerUsername ){
+        userService.assignManager(complainNumber,managerUsername);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

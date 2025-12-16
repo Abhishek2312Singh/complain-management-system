@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import PendingComplain from "./PendingComplain";
+import InProcessComplain from "./InProcessComplain";
+import ClosedComplain from "./ClosedComplain";
 
 const MENU_ITEMS = [
   { key: "profile", label: "Update Profile" },
   { key: "managers", label: "Managers" },
-  { key: "pending", label: "Pending Request" },
-  { key: "in_process", label: "In_Process Request" },
-  { key: "closed", label: "Closed Request" }
+  { key: "pending", label: "Pending Complain" },
+  { key: "in_process", label: "In_Process Complain" },
+  { key: "closed", label: "Closed Complain" }
 ];
 
 const AdminPanel = () => {
@@ -963,32 +966,11 @@ const AdminPanel = () => {
           </>
         );
       case "pending":
-        return (
-          <>
-            <h2>Pending Request</h2>
-            <p style={{ marginBottom: "12px", color: "#6b7280", fontSize: "0.9rem" }}>
-              View and manage all complaints that are currently in pending state.
-            </p>
-          </>
-        );
+        return <PendingComplain />;
       case "in_process":
-        return (
-          <>
-            <h2>In_Process Request</h2>
-            <p style={{ marginBottom: "12px", color: "#6b7280", fontSize: "0.9rem" }}>
-              Track complaints that are being worked on by managers.
-            </p>
-          </>
-        );
+        return <InProcessComplain />;
       case "closed":
-        return (
-          <>
-            <h2>Closed Request</h2>
-            <p style={{ marginBottom: "12px", color: "#6b7280", fontSize: "0.9rem" }}>
-              Review complaints that have been resolved and closed.
-            </p>
-          </>
-        );
+        return <ClosedComplain />;
       default:
         return null;
     }

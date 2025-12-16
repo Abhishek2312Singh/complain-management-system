@@ -1,10 +1,13 @@
 package com.example.Product.Service.controller;
 
 import com.example.Product.Service.dto.ComplainInputDto;
+import com.example.Product.Service.dto.ComplainOutputDto;
 import com.example.Product.Service.service.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/complain")
@@ -23,5 +26,9 @@ public class ComplainController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+    @GetMapping("/searchcomplain")
+    public ResponseEntity<List<ComplainOutputDto>> getComplainByStatusAndNumber(@RequestParam String status,@RequestParam String complainNumber){
+        return ResponseEntity.ok(complainService.getComplainByComplainNumberAndStatus(status,complainNumber));
     }
 }

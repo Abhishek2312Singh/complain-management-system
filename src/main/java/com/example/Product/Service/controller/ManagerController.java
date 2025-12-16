@@ -18,8 +18,4 @@ public class ManagerController {
     public ResponseEntity<List<UserOutputDto>> getAllManager(){
         return ResponseEntity.ok(managerService.getAllManager());
     }
-    @PostMapping("/addmanager")
-    public ResponseEntity<String> addManager(@RequestBody UserInputDto userInputDto){
-        return ResponseEntity.ok(managerService.addManager(userInputDto));
-    }
 }
