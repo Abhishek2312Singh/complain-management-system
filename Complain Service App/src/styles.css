@@ -5,11 +5,14 @@
   --danger: #ef4444;
   --danger-strong: #b91c1c;
   --danger-soft: #fee2e2;
-  --muted: #f3f4f6;
-  --border: #e5e7eb;
+  --muted: #eef2f7;
+  --border: #d8e0ea;
   --text: #0f172a;
   --text-muted: #6b7280;
-  --bg: #f8fafc;
+  /* Light theme with slightly darker tone for contrast */
+  --bg: #eef2f7;
+  --surface: rgba(255, 255, 255, 0.82);
+  --shadow: rgba(15, 23, 42, 0.14);
 }
 
 *,
@@ -22,17 +25,22 @@ html {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top left, #e0f2fe, transparent 55%),
-    radial-gradient(circle at bottom right, #fee2e2, transparent 55%),
+  background: radial-gradient(circle at top left, rgba(191, 219, 254, 0.65), transparent 58%),
+    radial-gradient(circle at bottom right, rgba(254, 202, 202, 0.55), transparent 58%),
     var(--bg);
   overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
 header {
   padding: 16px 16px 18px;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: #fff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.28);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -88,11 +96,11 @@ main {
 }
 
 section {
-  background: #ffffffcc;
+  background: var(--surface);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 14px;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 45px var(--shadow);
   padding: 18px 18px 22px;
 }
 
@@ -138,7 +146,7 @@ textarea {
   border-radius: 9px;
   border: 1px solid var(--border);
   font: inherit;
-  background: #f9fafb;
+  background: rgba(248, 250, 252, 0.9);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
@@ -216,7 +224,8 @@ table {
   min-width: 720px;
   border-radius: 12px;
   overflow: hidden;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
 
 thead {
@@ -240,11 +249,11 @@ th {
 }
 
 tbody tr:nth-child(even) {
-  background: #f9fafb;
+  background: rgba(248, 250, 252, 0.8);
 }
 
 tbody tr:hover {
-  background: #eff6ff;
+  background: rgba(219, 234, 254, 0.7);
 }
 
 .empty {
